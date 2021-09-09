@@ -35,6 +35,11 @@ sudo dpkg -i graylog-4.1-repository_latest.deb
 sudo apt-get update && sudo apt-get install graylog-server graylog-integrations-plugins 
 
 
+shapass=$(echo graylogInitPass123 | sha256sum | cut -d" " -f1)
+sed -i "s/^root_password_sha2.*/root_password_sha2 = $shapass/" /etc/graylog/server/server.conf
+
+sudo systemctl enable graylog-server.service
+sudo systemctl start graylog-server.service
 
 
 
