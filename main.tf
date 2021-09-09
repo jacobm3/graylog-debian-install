@@ -31,10 +31,10 @@ resource "aws_instance" "web" {
   root_block_device { volume_size = 40 }
   tags = { Name = "graylog" }
   user_data = << EOF
-		#! /bin/bash
-    curl -fsSL https://raw.githubusercontent.com/jacobm3/gbin/main/ubuntu-setup.sh | bash && \
-    curl -fsSL https://raw.githubusercontent.com/jacobm3/graylog-debian-install/main/install.sh | bash
-	EOF
+#!/bin/bash
+curl -fsSL https://raw.githubusercontent.com/jacobm3/gbin/main/ubuntu-setup.sh | bash && \
+curl -fsSL https://raw.githubusercontent.com/jacobm3/graylog-debian-install/main/install.sh | bash
+EOF
 }
 
 output "public_ip" {
