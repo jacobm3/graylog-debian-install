@@ -45,6 +45,10 @@ sudo sed -i "s/^root_password_sha2.*/root_password_sha2 = $shapass/" /etc/graylo
 sudo sed -i 's/^http_bind_address/#http_bind_address/' /etc/graylog/server/server.conf
 echo 'http_bind_address = 0.0.0.0:9000' | sudo tee -a /etc/graylog/server/server.conf
 
+passsec=$(pwgen -N 1 -s 96)
+sudo sed -i "s/^password_secret.*/password_secret = $passsec/" /etc/graylog/server/server.conf
+
+
 sudo systemctl daemon-reload
 sudo systemctl enable graylog-server.service
 sudo systemctl start graylog-server.service
