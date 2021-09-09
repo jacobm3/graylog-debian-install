@@ -40,7 +40,7 @@ sudo dpkg -i graylog-4.1-repository_latest.deb
 sudo apt-get update && sudo apt-get install graylog-server graylog-integrations-plugins 
 
 
-shapass=$(echo graylogInitPass123 | sha256sum | cut -d" " -f1)
+shapass=$(echo graylogInitPass123 | tr -d '\n' | sha256sum | cut -d" " -f1)
 sudo sed -i "s/^root_password_sha2.*/root_password_sha2 = $shapass/" /etc/graylog/server/server.conf
 sudo sed -i 's/^http_bind_address/#http_bind_address/' /etc/graylog/server/server.conf
 echo 'http_bind_address = 0.0.0.0:9000' | sudo tee -a /etc/graylog/server/server.conf
