@@ -2,6 +2,11 @@
 
 # https://docs.graylog.org/en/4.1/pages/installation/os/debian.html
 
+hostname=graylog-install
+echo hostname | sudo tee -a /etc/hostname
+echo "127.0.0.1 localhost $hostname" | sudo tee -a /etc/hosts
+sudo hostname $hostname
+
 sudo apt update && sudo apt upgrade
 
 
