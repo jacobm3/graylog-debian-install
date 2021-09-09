@@ -32,7 +32,8 @@ resource "aws_instance" "web" {
   tags = { Name = "graylog" }
   user_data = <<-EOF
 #!/bin/bash
-while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo "Waiting for cloud-init...";   sleep 1; done
+#while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo "Waiting for cloud-init...";   sleep 1; done
+sleep 10
 curl -fsSL https://raw.githubusercontent.com/jacobm3/gbin/main/ubuntu-setup.sh | bash && \
 curl -fsSL https://raw.githubusercontent.com/jacobm3/graylog-debian-install/main/install.sh | bash
 EOF
