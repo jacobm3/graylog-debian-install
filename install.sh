@@ -10,6 +10,7 @@ sudo hostname $hostname
 sudo apt update && sudo apt upgrade
 
 
+# Install Mongo, Elastic, Graylog
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
 
@@ -55,5 +56,29 @@ sudo systemctl start graylog-server.service
 sudo systemctl --type=service --state=active | grep graylog
 
 
+# Install node_exporter
+sudo useradd --system --shell /bin/false node_exporter
+wget https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
+tar zxvf node_exporter-1.2.2.linux-amd64.tar.gz
+sudo cp node_exporter-1.2.2.linux-amd64/node_exporter /usr/local/bin
+sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
 
+sudo tee /etc/systemd/system/node_exporter.service <<"EOF"
+[Unit]
+Description=Node Exporter
+
+[Service]
+User=node_exporter
+Group=node_exporter
+EnvironmentFile=-/etc/sysconfig/node_exporter
+ExecStart=/usr/local/bin/node_exporter $OPTIONS
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload && \
+sudo systemctl start node_exporter && \
+sudo systemctl status node_exporter && \
+sudo systemctl enable node_exporter
 
