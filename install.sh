@@ -32,7 +32,7 @@ sudo systemctl restart elasticsearch.service
 
 wget https://packages.graylog2.org/repo/packages/graylog-4.1-repository_latest.deb
 sudo dpkg -i graylog-4.1-repository_latest.deb
-sudo apt-get update && sudo apt-get install graylog-server graylog-plugins graylog-integrations-plugins 
+sudo apt-get update && sudo apt-get install graylog-server graylog-integrations-plugins 
 
 
 
