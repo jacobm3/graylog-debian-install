@@ -29,6 +29,7 @@ resource "aws_instance" "web" {
   instance_type = "t3.medium"
   key_name = "acer-wsl"
   root_block_device { volume_size = 40 }
+  tags = { Name = "graylog" }
 }
 
 output "public_ip" {
