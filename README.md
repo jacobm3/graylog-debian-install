@@ -5,3 +5,4 @@ curl -fsSL https://raw.githubusercontent.com/jacobm3/graylog-debian-install/main
 
 
 
+tail -f /var/log/cloud-init-output.log
