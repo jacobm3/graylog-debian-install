@@ -68,8 +68,8 @@ sudo cp /etc/graylog/server/server.conf /etc/graylog/server/server.conf.dist
 # SEC=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96} | head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1)
 SEC1=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96})
 SEC2=$(echo $SEC1 | head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1)
-echo $SEC1 > /root/sec1.txt
-echo $SEC2 > /root/sec2.txt
+echo $SEC1 | sudo tee /root/sec1.txt
+echo $SEC2 | sudo tee /root/sec2.txt
 sudo sed -i "s/^password_secret/password_secret = $SEC2/" /etc/graylog/server/server.conf
 sudo sed -i '/^[^#]*http_bind_address/s/^/#/' /etc/graylog/server/server.conf
 echo 'http_bind_address = 0.0.0.0:9000' | sudo tee -a /etc/graylog/server/server.conf
