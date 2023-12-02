@@ -31,8 +31,8 @@ echo "deb [signed-by=/usr/share/keyrings/opensearch-keyring] https://artifacts.o
 sudo apt-get update
 sudo apt-get install opensearch
 
-cp /etc/opensearch/opensearch.yml /etc/opensearch/opensearch.yml.dist
-cat > /etc/opensearch/opensearch.yml <<EOF
+sudo cp /etc/opensearch/opensearch.yml /etc/opensearch/opensearch.yml.dist
+sudo tee /etc/opensearch/opensearch.yml <<EOF
 cluster.name: graylog
 node.name: ${HOSTNAME}
 path.data: /var/lib/opensearch
@@ -44,8 +44,8 @@ plugins.security.disabled: true
 EOF
 
 # memory tuning
-cp /etc/opensearch/jvm.options /etc/opensearch/jvm.options.dist
-cat > /etc/opensearch/jvm.options <<EOF
+sudo cp /etc/opensearch/jvm.options /etc/opensearch/jvm.options.dist
+sudo tee /etc/opensearch/jvm.options <<EOF
 -Xms1g
 -Xmx1g
 EOF
