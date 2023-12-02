@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -e
+set -e
 
 # curl -sSL https://raw.githubusercontent.com/jacobm3/graylog-debian-install/main/tmp/graylog-5.2-ubuntu22.sh | bash
 
