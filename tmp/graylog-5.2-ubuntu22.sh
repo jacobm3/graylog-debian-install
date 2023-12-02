@@ -23,7 +23,7 @@ sudo apt-get install -y mongodb-org
 sudo systemctl daemon-reload
 sudo systemctl enable mongod.service
 sudo systemctl restart mongod.service
-sudo systemctl --type=service --state=active | grep mongod
+sudo systemctl --type=service --state=active --no-pager | grep mongod
 
 # opensearch
 curl -o- https://artifacts.opensearch.org/publickeys/opensearch.pgp | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/opensearch-keyring
@@ -56,11 +56,21 @@ echo 'vm.max_map_count=262144' >> sudo /etc/sysctl.conf
 sudo systemctl daemon-reload
 sudo systemctl enable opensearch.service
 sudo systemctl start opensearch.service
-#sudo systemctl status opensearch.service
+sudo systemctl status --no-pager opensearch.service
 
 # graylog
 wget https://packages.graylog2.org/repo/packages/graylog-5.2-repository_latest.deb
 sudo dpkg -i graylog-5.2-repository_latest.deb
 sudo apt-get update && sudo apt-get install graylog-server=5.2.1-1 
 
+sudo cp /etc/graylog/server/server.conf /etc/graylog/server/server.conf.dist
+SEC=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96} | head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1)
+sudo sed -i "s/^password_secret/password_secret = $SEC/" /etc/graylog/server/server.conf
+sudo sed -i '/^[^#]*http_bind_address/s/^/#/' /etc/graylog/server/server.conf
+echo 'http_bind_address = 0.0.0.0:9000' | sudo tee -a /etc/graylog/server/server.conf
+echo 'elasticsearch_hosts = http://localhost:9200' | sudo tee -a /etc/graylog/server/server.conf
 
+sudo systemctl daemon-reload
+sudo systemctl enable graylog-server.service
+sudo systemctl start graylog-server.service
+sudo systemctl --type=service --state=active --no-pager | grep graylog
