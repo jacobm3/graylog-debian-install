@@ -61,6 +61,6 @@ sudo systemctl start opensearch.service
 # graylog
 wget https://packages.graylog2.org/repo/packages/graylog-5.2-repository_latest.deb
 sudo dpkg -i graylog-5.2-repository_latest.deb
-sudo apt-get update && sudo apt-get install graylog-server 
+sudo apt-get update && sudo apt-get install graylog-server=5.2.1-1 
 
 
