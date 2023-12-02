@@ -75,6 +75,9 @@ sudo sed -i '/^[^#]*http_bind_address/s/^/#/' /etc/graylog/server/server.conf
 echo 'http_bind_address = 0.0.0.0:9000' | sudo tee -a /etc/graylog/server/server.conf
 echo 'elasticsearch_hosts = http://localhost:9200' | sudo tee -a /etc/graylog/server/server.conf
 
+ROOTPASS=$(echo -n changeme123 | shasum -a 256 | cut -f1 -d' ')
+sudo sed -i "s/^root_password_sha2/root_password_sha2 = $ROOTPASS/" /etc/graylog/server/server.conf
+
 sudo systemctl daemon-reload
 sudo systemctl enable graylog-server.service
 sudo systemctl start graylog-server.service
