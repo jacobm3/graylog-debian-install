@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# curl -sSL 
+# curl -sSL https://raw.githubusercontent.com/jacobm3/graylog-debian-install/main/tmp/graylog-5.2-ubuntu22.sh | bash
 
 # https://go2docs.graylog.org/5-2/downloading_and_installing_graylog/ubuntu_installation.html
 
