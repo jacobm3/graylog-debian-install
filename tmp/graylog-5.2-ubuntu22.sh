@@ -56,7 +56,7 @@ echo 'vm.max_map_count=262144' >> sudo /etc/sysctl.conf
 sudo systemctl daemon-reload
 sudo systemctl enable opensearch.service
 sudo systemctl start opensearch.service
-sudo systemctl status opensearch.service
+#sudo systemctl status opensearch.service
 
 # graylog
 wget https://packages.graylog2.org/repo/packages/graylog-5.2-repository_latest.deb
